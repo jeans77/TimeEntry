@@ -1,5 +1,6 @@
 package com.libertymutual.goforcode.timeless.services;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -32,7 +33,7 @@ public class TimeEntryRepository {
 	List<TimeEntryItem> timeEntryItems;
 
 	int itemId;
-	String week;
+	String date;
 	Double monday;
 	Double tuesday;
 	Double wednesday;
@@ -47,7 +48,6 @@ public class TimeEntryRepository {
 
 		System.out.println("Repository getAll: starting");
 		timeEntryItems = new ArrayList<TimeEntryItem>();
-		TimeEntryItem timeEntryItem = null;
 
 		// Create the Update record if not present.
 		if (inputFile.length() == 0) {
@@ -62,15 +62,12 @@ public class TimeEntryRepository {
 			try (FileReader fr = new FileReader(inputFile);
 					CSVParser csvParser = new CSVParser(fr, CSVFormat.DEFAULT)) {
 				// Read CSV file
-				int i = 0;
+				int i = 0;	
+				
 				for (CSVRecord entry : csvParser) {
-						System.out.println("Repository FileReadingLoop (week): " + entry.get(0));
-					timeEntryItem = new TimeEntryItem();
-//					timeEntryItem.setWeek(String.valueOf(entry.get(0)));
-
-					
-				    //week = formatter.parse(entry.get(0));
-					timeEntryItem.setWeek(String.valueOf(entry.get(0)));
+						System.out.println("Repository FileReadingLoop (date): " + entry.get(0));
+					TimeEntryItem timeEntryItem = new TimeEntryItem();
+					timeEntryItem.setDate(entry.get(0));
 					timeEntryItem.setMonday(Double.valueOf(entry.get(1)));
 					timeEntryItem.setTuesday(Double.valueOf(entry.get(2)));
 					timeEntryItem.setWednesday(Double.valueOf(entry.get(3)));
@@ -78,6 +75,7 @@ public class TimeEntryRepository {
 					timeEntryItem.setFriday(Double.valueOf(entry.get(5)));
 					timeEntryItem.setTotal(Double.valueOf(entry.get(6)));
 					timeEntryItem.setStatus(entry.get(7));
+						System.out.println("Repository timeEntryItem to store: " + timeEntryItem.toString());
 					timeEntryItems.add(i, timeEntryItem);
 					i++;
 				}
@@ -117,7 +115,7 @@ public class TimeEntryRepository {
 				System.out.println("Repository --- Starting Update-----------");
 				if (status == "U") {
 					System.out.println("Repository --- Update of a U-----------");
-					record.add(item.getWeek());
+					record.add(item.getDate());
 					record.add(Double.toString(item.getMonday()));
 					record.add(Double.toString(item.getTuesday()));
 					record.add(Double.toString(item.getWednesday()));
@@ -130,7 +128,7 @@ public class TimeEntryRepository {
 
 				} else {
 					System.out.println("Repository --- Update of a S-----------");
-					record.add(timeEntryItems.get(i).getWeek());
+					record.add(timeEntryItems.get(i).getDate());
 					record.add(Double.toString(timeEntryItems.get(i).getMonday()));
 					record.add(Double.toString(timeEntryItems.get(i).getTuesday()));
 					record.add(Double.toString(timeEntryItems.get(i).getWednesday()));
@@ -145,7 +143,7 @@ public class TimeEntryRepository {
 
 				if (status == "S") {
 					System.out.println("Repository --- Submit of a S-----------");
-					record.add(timeEntryItems.get(i).getWeek());
+					record.add(timeEntryItems.get(i).getDate());
 					record.add(Double.toString(timeEntryItems.get(i).getMonday()));
 					record.add(Double.toString(timeEntryItems.get(i).getTuesday()));
 					record.add(Double.toString(timeEntryItems.get(i).getWednesday()));
@@ -165,7 +163,7 @@ public class TimeEntryRepository {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					record.add(String.valueOf(item.getWeek()));
+					record.add(String.valueOf(item.getDate()));
 					record.add(Double.toString(item.getMonday()));
 					record.add(Double.toString(item.getTuesday()));
 					record.add(Double.toString(item.getWednesday()));

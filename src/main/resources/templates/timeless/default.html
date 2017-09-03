@@ -49,7 +49,7 @@
 
 			<tbody>
 				<tr>
-				<td><input autofocus placeholder="yyyy-MM-dd" required type="date" name="week" value={{#week}} {{ . }} {{/week}}></td>
+				<td><input autofocus placeholder="mm/dd/yy" required type="date" name="date" value={{#date}} {{ . }} {{/date}}></td>
 				<td><input required type="number" name="monday" value={{#monday}} {{ . }} {{/monday}}  min=0 max=24 style="height: 20px; width: 50px; background-color: lightgreen"></td>
 				<td><input required type="number" name="tuesday" value={{#tuesday}} {{ . }} {{/tuesday}} min=0 max=24 style="height: 20px; width: 50px; background-color: lightgreen"></td>
 				<td><input required type="number" name="wednesday" value={{#wednesday}} {{ . }} {{/wednesday}} min=0 max=24 style="height: 20px; width: 50px; background-color: lightgreen"></td>
@@ -89,7 +89,7 @@
 		</thead>
 		<tbody>
 			{{#timeEntryItems}}
-			<td>{{#week}} {{ . }} {{/week}}</td>
+			<td>{{ #date }} {{ . }} {{/date}}</td>
 			<td>{{ monday }}</td>
 			<td>{{ tuesday }}</td>
 			<td>{{ wednesday }}</td>

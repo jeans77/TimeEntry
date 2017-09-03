@@ -13,7 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class TimeEntryItem {
 
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-    private String week;
+    private String date;
     private double monday;
     private double tuesday;
     private double wednesday;
@@ -36,12 +36,12 @@ public class TimeEntryItem {
     return dateS;
     }
     		
-    public String getWeek() {
-  		return week;
+    public String getDate() {
+  		return date;
   	}
 
-  	public void setWeek(String date) {
-  		this.week = week;
+  	public void setDate(String date) {
+  		this.date = date;
   	}
     
     public double getMonday() {

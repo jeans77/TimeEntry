@@ -18,7 +18,7 @@ public class TimeEntryController {
 	private String buttonChoice;
 //	private String timeEntryItems;
 	private TimeEntryRepository repository;
-	private String week = "yyyy-MM-dd";
+	private String date = "yyyy-MM-dd";
 	private String status;
 	private boolean hasSubmittedItems;
 //	private boolean hasUpdatedItems;
@@ -47,10 +47,10 @@ public class TimeEntryController {
 		TimeEntryItem item = new TimeEntryItem();
 
 		for (int i= 0; i < timeEntryItems.size(); i++) {
-				System.out.println("Controller ItemsReadingLoop (Week-Monday-Status): " + "-" + timeEntryItems.get(i).getWeek() + "-" + timeEntryItems.get(i).getMonday() + "_" + timeEntryItems.get(i).getStatus());
+				System.out.println("Controller ItemsReadingLoop (Date-Monday-Status): " + "-" + timeEntryItems.get(i).getDate() + "-" + timeEntryItems.get(i).getMonday() + "_" + timeEntryItems.get(i).getStatus());
 			if (buttonChoice == "update") {
-				week = item.getWeek();
-//				System.out.println("Controller Get week : " + week);
+				date = item.getDate();
+//				System.out.println("Controller Get date : " + date);
 			}
 
 			if (timeEntryItems.get(i).getStatus().equals("S")) {
@@ -61,7 +61,7 @@ public class TimeEntryController {
 			
 			if (timeEntryItems.get(i).getStatus().equals("U")) {
 
-				mv.addObject("week", week);
+				mv.addObject("date", date);
 				mv.addObject("monday", timeEntryItems.get(i).getMonday());
 				mv.addObject("tuesday", timeEntryItems.get(i).getTuesday());
 				mv.addObject("wednesday", timeEntryItems.get(i).getWednesday());
@@ -82,8 +82,8 @@ public class TimeEntryController {
 		ModelAndView mv = new ModelAndView("redirect:/timeless");
 				System.out.println("Controller Post Update Starting");
 			List<TimeEntryItem> timeEntryItems = null;
-//			week = item.getWeek();
-//				System.out.println("Controller Get week : " + week);
+//			date = item.getDate();
+//				System.out.println("Controller Get date : " + date);
 			if (button.equals("update")) {
 				buttonChoice = "update";
 			}else {
