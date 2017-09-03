@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+
+	<head>
+		<title>Timeless</title>
+		<style>
+			<thead {
+				color: green;
+			}
+
+			<tbody {
+				color: blue;
+			}
+
+			<tfoot {
+				color: red;
+			}
+
+			table, th, td {
+				border: 1px solid black;
+			}
+		</style>
+	</head>
+
+	<body>
+		<form class="pure-form" action="/timeless" method="post">
+			<table class="pure-table pure-table-bordered">
+			<thead>
+				<colgroup>
+					<col span="7" style="background-color: yellow">
+					<col style="background-color: lightblue">
+					</colgroup>
+
+				<tr>
+					<th>Week</th>
+					<th>Monday</th>
+					<th>Tuesday</th>
+					<th>Wednesday</th>
+					<th>Thursday</th>
+					<th>Friday</th>
+					<th>Total</th>
+				</tr>
+			</thead>
+
+				<colgroup>
+					<col span="6" style="background-color: yellow">
+					<col style="background-color: lightblue">
+				</colgroup>
+
+			<tbody>
+				<tr>
+				<td><input autofocus placeholder="yyyy-MM-dd" required type="date" name="week" value={{#week}} {{ . }} {{/week}}></td>
+				<td><input required type="number" name="monday" value={{#monday}} {{ . }} {{/monday}}  min=0 max=24 style="height: 20px; width: 50px; background-color: lightgreen"></td>
+				<td><input required type="number" name="tuesday" value={{#tuesday}} {{ . }} {{/tuesday}} min=0 max=24 style="height: 20px; width: 50px; background-color: lightgreen"></td>
+				<td><input required type="number" name="wednesday" value={{#wednesday}} {{ . }} {{/wednesday}} min=0 max=24 style="height: 20px; width: 50px; background-color: lightgreen"></td>
+				<td><input required type="number" name="thursday" value={{#thursday}}  {{ . }} {{/thursday}}min=0 max=24 style="height: 20px; width: 50px; background-color: lightgreen"></td>
+				<td><input required type="number" name="friday" value={{#friday}}  {{ . }} {{/friday}} min=0 max=24 style="height: 20px; width: 50px; background-color: lightgreen"></td>
+				<td>{{#total}}{{ . }}{{/total}}</td> 
+				</tr>
+			</tbody>
+		</table>
+		
+		<br>
+		<button class="pure-button" name="button" value="update" >Update</button>
+		<button class="pure-button" name="button" value="submit" >Submit</button>
+		<br>
+		
+	</form>
+	
+	<br>
+	
+	<hr>
+	{{#hasSubmittedItems}}
+	<table class="pure-table pure-tablr-bordered">
+		<colgroup>
+			<col span="6" style="background-color: yellow">
+			<col style="background-color: lightblue">
+		</colgroup>
+		<thead>
+			<tr>
+				<th>Week</th>
+				<th>Monday</th>
+				<th>Tuesday</th>
+				<th>Wednesday</th>
+				<th>Thursday</th>
+				<th>Friday</th>
+				<th>Total</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#timeEntryItems}}
+			<td>{{#week}} {{ . }} {{/week}}</td>
+			<td>{{ monday }}</td>
+			<td>{{ tuesday }}</td>
+			<td>{{ wednesday }}</td>
+			<td>{{ thursday }}</td>
+			<td>{{ friday }}</td>
+			<td>{{ total }}</td>
+			<tr>
+			{{/timeEntryItems}} 
+		
+		</tbody>
+		<tfoot>
+			<p>
+				<b>Tip:</b> Write anything you want here.
+			</p>
+		</tfoot>
+	</table>
+	{{/hasSubmittedItems}}
+	</div>
+</body>
+</html>
