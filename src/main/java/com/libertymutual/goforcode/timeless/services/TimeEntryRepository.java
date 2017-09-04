@@ -32,7 +32,6 @@ public class TimeEntryRepository {
 	DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 	List<TimeEntryItem> timeEntryItems;
 
-	int itemId;
 	String date;
 	Double monday;
 	Double tuesday;
@@ -42,11 +41,9 @@ public class TimeEntryRepository {
 	Double total;
 	String status;
 	String buttonChoice;
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     
 	public List<TimeEntryItem> getAll() {
 
-		System.out.println("Repository getAll: starting");
 		timeEntryItems = new ArrayList<TimeEntryItem>();
 
 		// Create the Update record if not present.
@@ -65,7 +62,7 @@ public class TimeEntryRepository {
 				int i = 0;	
 				
 				for (CSVRecord entry : csvParser) {
-						System.out.println("Repository FileReadingLoop (date): " + entry.get(0));
+					
 					TimeEntryItem timeEntryItem = new TimeEntryItem();
 					timeEntryItem.setDate(entry.get(0));
 					timeEntryItem.setMonday(Double.valueOf(entry.get(1)));
@@ -75,7 +72,7 @@ public class TimeEntryRepository {
 					timeEntryItem.setFriday(Double.valueOf(entry.get(5)));
 					timeEntryItem.setTotal(Double.valueOf(entry.get(6)));
 					timeEntryItem.setStatus(entry.get(7));
-						System.out.println("Repository timeEntryItem to store: " + timeEntryItem.toString());
+					
 					timeEntryItems.add(i, timeEntryItem);
 					i++;
 				}
@@ -97,11 +94,8 @@ public class TimeEntryRepository {
 
 	public void update(TimeEntryItem item, String buttonChoice) {
 		Boolean append = false;
-		System.out.println("Repository Start update-button: " + buttonChoice);
 
 		for (int i = 0; i < timeEntryItems.size(); i++) {
-			// System.out.println("Repository --- item(-" + i + "-) : " +
-			// timeEntryItems.get(i).toString());
 
 			List<String> record = new ArrayList<String>();
 
@@ -112,22 +106,21 @@ public class TimeEntryRepository {
 			}
 			
 			if (buttonChoice == "update") {
-				System.out.println("Repository --- Starting Update-----------");
+
 				if (status == "U") {
-					System.out.println("Repository --- Update of a U-----------");
+
 					record.add(item.getDate());
 					record.add(Double.toString(item.getMonday()));
 					record.add(Double.toString(item.getTuesday()));
 					record.add(Double.toString(item.getWednesday()));
 					record.add(Double.toString(item.getThursday()));
 					record.add(Double.toString(item.getFriday()));
-					// record.add(Double.toString(item.getTotal()));
 					record.add(Double.toString(item.getMonday() + item.getTuesday() + item.getWednesday()
 							+ item.getThursday() + item.getFriday()));
 					record.add("U");
 
 				} else {
-					System.out.println("Repository --- Update of a S-----------");
+
 					record.add(timeEntryItems.get(i).getDate());
 					record.add(Double.toString(timeEntryItems.get(i).getMonday()));
 					record.add(Double.toString(timeEntryItems.get(i).getTuesday()));
@@ -142,7 +135,7 @@ public class TimeEntryRepository {
 			} else {
 
 				if (status == "S") {
-					System.out.println("Repository --- Submit of a S-----------");
+
 					record.add(timeEntryItems.get(i).getDate());
 					record.add(Double.toString(timeEntryItems.get(i).getMonday()));
 					record.add(Double.toString(timeEntryItems.get(i).getTuesday()));
@@ -154,8 +147,6 @@ public class TimeEntryRepository {
 
 				} else {
 					
-					System.out.println("Repository --- Submit of a U-----------");
-
 					try (CSVPrinter printer = new CSVPrinter(new FileWriter(inputFile, append), CSVFormat.DEFAULT)) {
 						append = true;
 						printer.printRecord("yyyy-MM-dd",0.0,0.0,0.0,0.0,0.0,0.0,"U");
@@ -170,13 +161,11 @@ public class TimeEntryRepository {
 					record.add(Double.toString(item.getThursday()));
 					record.add(Double.toString(item.getFriday()));
 					record.add(Double.toString(item.getTotal()));
-//					record.add(Double.toString(item.getMonday() + item.getTuesday() + item.getWednesday() + item.getThursday() + item.getFriday()));
 					record.add("S");
 				}
 			}
 			
 			try (CSVPrinter printer = new CSVPrinter(new FileWriter(inputFile, append), CSVFormat.DEFAULT)) {
-				System.out.println("Repository --- Writing record " + record);
 				printer.printRecord(record);
 				append = true;
 			} catch (IOException e) {

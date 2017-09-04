@@ -11,7 +11,7 @@ public class TimeEntryTest {
 	
 		private TimeEntryItem method;
 		private ArrayList<Double> testTimeEntry;
-		private String week;
+		private String date;
 	    private double monday;
 	    private double tuesday;
 	    private double wednesday;
@@ -26,7 +26,7 @@ public class TimeEntryTest {
 		public void setUp() {
 			//Create TimrEntry and set date and hours.
 			method = new TimeEntryItem();
-			method.setWeek("12/31/2017");
+			method.setDate("12/31/2017");
 			method.setMonday(1.0);
 			method.setTuesday(2.0);
 			method.setWednesday(3.0);
@@ -81,9 +81,9 @@ public class TimeEntryTest {
 			}
 
 	    @Test
-	    public void test_getWeek() {
-	    	week = method.getWeek();
-	    	assertThat(week).isEqualTo("31/12/2017");
+	    public void test_getDate() {
+	    	date = method.getDate();
+	    	assertThat(date).isEqualTo("31/12/2017");
 	    }
 	    
 	    @Test
